@@ -16,6 +16,24 @@ Archive Includes:
 - Use {NPC_ENTER:Name} to denote character entrances
 ```txt
 CharacterName: {OptionalMoodTag} Dialogue text here
+
+Better Example:
+Alias Dave crazydave 
+Alias Penny winnie
+
+Prefix: EPIC_QUEST_SHADOWLURKERS_02_INTRO
+{NPC_ENTER:crazydave} {NPC_ENTER:winnie} Penny: User Dave, it appears some alternate zombie threats are coming out of the shadows.
+Dave: {EXCITED} Oh no! Not the fog-lurkers!
+Dave: {EXCITED} Those guys took our beloved friend GLOOM-SHROOM!
+Penny: User Dave, I believe you are mistaken.
+Penny: These zombies have only captured the Gloom Vine, not the Gloom-shroom.
+Penny: Gloom-shroom is currently enjoying his retirement, according to my data.
+
+Prefix: EPIC_QUEST_SHADOWLURKERS_04_INTRO
+Dave: What's with those spooky new tiles on the lawn?
+Penny: Data shows that these are Boosting Tiles, User Dave.
+Penny: Zombies that step on them can receive toughness, speed, or invincibility boosts.
+Dave: Invincibility?! These weird zombie guys just won't play fair!
 ```
 
 Then run the script with your `dialogue.txt` file in the same directory, then you're done!
