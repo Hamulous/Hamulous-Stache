@@ -9,7 +9,7 @@ Archive Includes:
 - A Cool Image Resizer, which is able to Resize images, rename them, and trim any excess in said images 
 - Export Sprites, which is able to look at any sprite sheet and extract its assets into individual images
 - PSD Exporter, which is able to extract all the layers of a PSD file using [psd-tools](https://github.com/psd-tools/psd-tools)
-- DialogueLawnFormatter, which is able to convert naturally written dialogue into the Pvz2's LawnString format (Written by: [Jay Krow](https://github.com/jaykrow))
+- DialogueLawnFormatter, which is able to convert naturally written dialogue into Pvz2's LawnString format (Written by: [Jay Krow](https://github.com/jaykrow))
 # DialogueLawnFormatter Example:
 - Start each section with a Prefix: line
 - Use Alias lines to define character name mappings
