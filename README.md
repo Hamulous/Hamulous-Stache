@@ -3,6 +3,7 @@ An Archive of Python Scripts I've made (Mostly for Pvz2 Modding help)
 
 Archive Includes:
 - A script that organizes Zombie Types and Zombie Properties based on what the order is in PropertySheets
+- A script that organizes Zombie Actions based on what the order is in ZombieProperties
 - A Bulk Costume integrator which helps out with the tedious tasks of adding costumes in the shop
 - Sort Lawnstrings, which sorts your lawn strings file in alphabetical order
 - Erase Plant levels, which believe it or not, erases the plant levels
