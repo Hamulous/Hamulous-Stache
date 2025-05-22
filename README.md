@@ -11,6 +11,29 @@ Archive Includes:
 - Export Sprites, which is able to look at any sprite sheet and extract its assets into individual images
 - PSD Exporter, which is able to extract all the layers of a PSD file using [psd-tools](https://github.com/psd-tools/psd-tools)
 - DialogueLawnFormatter, which is able to convert naturally written dialogue into Pvz2's LawnString format (Written by: [Jay Krow](https://github.com/jaykrow))
+
+# Swap Symbols Example:
+Project Folder Structure:
+```pgsql
+ZombieMod/
+├── DOMDocument.xml
+├── library/
+│   ├── media/
+│   │   ├── tutorial_gargantuar_87x65.png
+│   │   ├── tutorial_gargantuar_292x264.png
+│   ├── tutorial_gargantuar_87x65.xml
+│   ├── tutorial_gargantuar_292x264.xml
+├── symbol_map.json
+├── swap_symbols.py
+```
+Symbol Map Example:
+```json
+{
+  "tutorial_gargantuar_87x65": "zombie_arm_left",
+  "tutorial_gargantuar_292x264": "zombie_leg_right"
+}
+```
+
 # DialogueLawnFormatter Example:
 - Start each section with a Prefix: line
 - Use Alias lines to define character name mappings
