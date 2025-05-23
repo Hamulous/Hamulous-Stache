@@ -152,7 +152,7 @@ The script will create:
 
 # Swap Symbols Tool
 
-- Author: Hamulous
+- Author: [Hamulous](https://github.com/Hamulous)
 - Purpose: Renames all symbol references and associated files (XML + PNG) used in a PvZ2 animation asset bundle. It updates DOMDocument.xml, library media files, and symbol XMLs based on a user-defined rename map.
 
 Given a symbol_map.json, this script will:
