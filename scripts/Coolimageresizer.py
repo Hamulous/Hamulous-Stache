@@ -35,8 +35,13 @@ def resize_rename_trim_pngs(folder_path, prefix, scale_percent=100):
             img.save(new_path)  # Save resized and trimmed image
             print(f"Resized, renamed, and trimmed {filename} -> {new_filename}")
 
-# Example usage:
-folder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'resized_images')
-prefix = "peashooter"
-scale_percent = 50  # Resize to 50% of the original size
-resize_rename_trim_pngs(folder_path, prefix, scale_percent)
+if __name__ == "__main__":
+    folder_path = input("Enter the path to the folder with PNGs: ").strip('"')
+    prefix = input("Enter the prefix for the new file names: ")
+    try:
+        scale_percent = float(input("Enter the scale percent (e.g., 50 for 50%): "))
+    except ValueError:
+        print("Invalid input for scale percent. Using default 100%.")
+        scale_percent = 100.0
+
+    resize_rename_trim_pngs(folder_path, prefix, scale_percent)
