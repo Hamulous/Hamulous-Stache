@@ -16,6 +16,24 @@ The script will create:
 (In the same folder as your Propertysheets.json.)
 ```
 
+# Data to Atlas Converter
+
+- Author: [Hamulous](https://github.com/Hamulous)
+- Purpose: Converts a data.json from your xfl project into a properly formatted atlas.json.
+
+The script will:
+```
+- Loads a data.json containing image metadata
+- Uses image IDs and filenames to generate atlas paths
+```
+
+You will need a full path to a data.json inside an xfl project
+
+The script will create:
+```
+- a clean atlas.json with group/position info for each asset
+```
+
 # Dialogue Formatter 
 
 - Author: [Jay Krow](https://github.com/jaykrow)

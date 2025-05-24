@@ -35,7 +35,8 @@ CATEGORY_MAP = {
         "erase_plant_levels.py",
         "bulkadd_costumes.py",
         "dialogue.py",
-        "swap_symbols.py"
+        "swap_symbols.py",
+        "data_to_atlas.py"
     ],
     "Image/PSD Tools": [
         "ExportSprites.py",
