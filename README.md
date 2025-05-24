@@ -71,7 +71,7 @@ out.txt example:
 
 # Erase Plant Levels
 
-- Author: Hamulous
+- Author: [Hamulous](https://github.com/Hamulous)
 - Purpose: Strips all plant level data from the PLANTLEVELS.json file to simplify plants to level 1 with no progression.
 
 The script will:
