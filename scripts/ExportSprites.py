@@ -43,6 +43,7 @@ def extract_sprites(image_path):
 
     img, mask = load_and_mask(image_path)
     visited = np.zeros_like(mask, dtype=bool)
+    seen_boxes = set()
     sprite_id = 0
 
     for y in range(mask.shape[0]):
@@ -54,12 +55,33 @@ def extract_sprites(image_path):
                 min_x, max_x = min(xs), max(xs)
                 min_y, max_y = min(ys), max(ys)
 
+                # Skip tiny noise regions
+                if (max_x - min_x < 3) or (max_y - min_y < 3):
+                    continue
+
+                bbox = (min_x, min_y, max_x, max_y)
+                if bbox in seen_boxes:
+                    continue
+                seen_boxes.add(bbox)
+
                 sprite = img.crop((min_x, min_y, max_x + 1, max_y + 1))
-                sprite.save(os.path.join(output_dir, f"sprite_{sprite_id}.png"))
+                base_name = os.path.splitext(os.path.basename(image_path))[0]
+                sprite.save(os.path.join(output_dir, f"{base_name}_{sprite_id}.png"))
                 sprite_id += 1
 
-    print(f"Extracted {sprite_id} sprites to '{output_dir}'")
+    print(f"{sprite_id} sprites extracted from {os.path.basename(image_path)}")
+
+def main():
+    path = input("Enter the path to a PNG file or folder: ").strip('"')
+
+    if os.path.isfile(path) and path.lower().endswith(".png"):
+        extract_sprites(path)
+    elif os.path.isdir(path):
+        for fname in os.listdir(path):
+            if fname.lower().endswith(".png"):
+                extract_sprites(os.path.join(path, fname))
+    else:
+        print("Invalid path. Please provide a PNG file or a folder containing PNGs.")
 
 if __name__ == "__main__":
-    image_path = input("Enter the path to the PNG image: ").strip('"')
-    extract_sprites(image_path)
+    main()

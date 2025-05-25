@@ -9,5 +9,6 @@
     "bulkadd_costumes.py": "Bulk Add Costumes",
     "Coolimageresizer.py": "Cool Image Resizer",
     "dialogue.py": "Dialogue Formatter",
-    "data_to_atlas.py": "Data to Atlas"
+    "data_to_atlas.py": "Data to Atlas",
+    "rewrite_scg_json.py": "Rewrite SCG Data.json"
 }

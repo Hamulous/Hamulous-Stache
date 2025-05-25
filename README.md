@@ -148,6 +148,37 @@ The script will create:
 - a clean, organized zombieprops_results.json
 ```
 
+# Rewrite SCG JSON
+
+- Author: [Hamulous](https://github.com/Hamulous)
+- Purpose: Automatically creates a data.json file from a .package directory by mapping animation folders to PopAnim resources.
+
+The script will:
+```
+- Scan resource/images/initial/ inside a .package folder
+- Detects animation folders by category (e.g., plant, zombie, effect)
+- Generates POPANIM_<CATEGORY>_<NAME> entries
+```
+
+You will need a full path to a data.json from a .packages folder
+
+## Example:
+```go
+<YourMod>.package/
+└── resource/
+    └── images/
+        └── initial/
+            ├── plant/
+            │   └── peashooter/
+            └── zombie/
+                └── conehead/
+```
+
+The script will create:
+```
+- a structured data.json for your SCG with all PopAnim resources
+```
+
 # LawnStrings Sorter
 
 - Author: [Hamulous](https://github.com/Hamulous)

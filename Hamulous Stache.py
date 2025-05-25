@@ -36,7 +36,8 @@ CATEGORY_MAP = {
         "bulkadd_costumes.py",
         "dialogue.py",
         "swap_symbols.py",
-        "data_to_atlas.py"
+        "data_to_atlas.py",
+        "rewrite_scg_json.py"
     ],
     "Image/PSD Tools": [
         "ExportSprites.py",
