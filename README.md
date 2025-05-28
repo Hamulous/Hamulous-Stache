@@ -198,6 +198,34 @@ The script will create:
 ```
 - a new sorted file with the prefix sorted_
 ```
+# Speed Up Label Animations
+
+- Author: [Hamulous](https://github.com/Hamulous)
+- Purpose: Speeds up label XML animations in PvZ2 .xfl projects by modifying frame durations and removing every other frame (even-numbered frames)
+
+
+The script will:
+```
+- Scan the library/label/ folder of a given .xfl project
+- Lets you select a label XML file to edit
+- Divides frame durations by a speed multiplier (default: 2)
+```
+
+You will need a full path to any valid xfl project with a vaild structure
+## Example:
+```go
+Your_project.xfl/
+└── library/
+    └── label/
+        ├── anim_walk.xml
+        ├── anim_idle.xml
+        └── ...
+```
+
+The script will create:
+```
+- The inputted label with one which will replace every even-numbered frame.
+```
 
 # Swap Symbols Tool
 

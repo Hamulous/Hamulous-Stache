@@ -37,7 +37,8 @@ CATEGORY_MAP = {
         "dialogue.py",
         "swap_symbols.py",
         "data_to_atlas.py",
-        "rewrite_scg_json.py"
+        "rewrite_scg_json.py",
+        "speedup_labels.py"
     ],
     "Image/PSD Tools": [
         "ExportSprites.py",
