@@ -230,16 +230,20 @@ The script will create:
 # Swap Symbols Tool
 
 - Author: [Hamulous](https://github.com/Hamulous)
-- Purpose: Renames all symbol references and associated files (XML + PNG) used in a PvZ2 animation asset bundle. It updates DOMDocument.xml, library media files, and symbol XMLs based on a user-defined rename map.
+- Purpose: Renames all symbol references and associated files (XML + PNG) used in a PvZ2 animation asset bundle. It updates DOMDocument.xml, library media files, and symbol XMLs. Supports both interactive renaming and bulk renaming using a symbol map.
 
 Given a symbol_map.json, this script will:
 ```
-- Update all symbol references in DOMDocument.xml
-- Renames media PNGs in library/media/ according to the map
-- Modifies and renames XML symbol files in the library/ folder
+- Replaces symbol names in, DOMDocument.xml, PNGs in media/, Symbol XML files in library/, IDs and keys in data.json
 ```
 
-You will need a full path to any valid DOMDocument.xml file, library/ folder containing media/ and symbol XMLs
+Works in two modes:
+```
+- Interactive – Manual rename find and replace with symbols
+- Bulk – Rename multiple symbols using a symbol_map.json
+```
+
+You will need a full path to any valid DOMDocument.xml file, library/ folder containing media/, symbol XMLs and a vaild symbol_map.json (If you're using bulk method)
 
 ## symbol_map.json example:
 ```
