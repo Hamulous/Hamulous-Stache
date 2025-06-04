@@ -28,12 +28,12 @@ def convert_data_to_atlas(input_path, subgroup, base_path):
             "path": f"{base_path.rstrip('/')}/{key}"
         }
 
-    # Output to same folder as data.json
-    output_path = os.path.join(os.path.dirname(input_path), "atlas.json")
+    # Output to same folder as atlas.json
+    output_path = input("Enter full path to the atlas.json you want to overwrite:\n").strip('"')
     with open(output_path, "w") as f:
         json.dump(atlas, f, indent=4)
 
-    print(f"Atlas saved to:\n{output_path}")
+    print(f"atlas.json successfully overwritten at:\n{output_path}")
 
 if __name__ == "__main__":
     input_path = input("Drag your data.json here and press Enter:\n")
