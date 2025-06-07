@@ -295,6 +295,26 @@ The script will:
 - Save the updated image(s) in the same folder
 ```
 
+# Upscale Images:
+- Author: [Hamulous](https://github.com/Hamulous)
+- Purpose: Enhances image quality for sprites using [OpenCV](https://github.com/opencv/opencv) while intelligently skipping glow strokes and effects that tend to break when filtered.
+
+You will need a full path to a image of your choosing, or folder of pngs you'd like to upscale
+
+When prompted:
+```
+- Enter how much color smoothing to apply
+- How much edge sharpening to apply
+- A path to either a single png image or folder of which you would like to upscale
+```
+
+The script will:
+```
+- Enhance edges and colors using bilateral filters
+- skips enhancement for Glow strokes (via smart pixel analysis), Tagged effect files (e.g., eff, glow), Tiny utility sprites
+- Automatically backs up originals into a backup/ folder
+```
+
 # Export Sprites from PNG
 
 - Author: [Hamulous](https://github.com/Hamulous)
