@@ -3,25 +3,43 @@ import json
 
 def gather_resource_entries(base_path):
     entries = {}
+
+    # Scan resource/images/initial/
     initial_path = os.path.join(base_path, "resource", "images", "initial")
-    if not os.path.isdir(initial_path):
-        print("Could not find 'resource/images/initial/' in the given package.")
-        return entries
+    if os.path.isdir(initial_path):
+        for category in os.listdir(initial_path):
+            category_path = os.path.join(initial_path, category)
+            if not os.path.isdir(category_path):
+                continue
 
-    for category in os.listdir(initial_path):
-        category_path = os.path.join(initial_path, category)
-        if not os.path.isdir(category_path):
-            continue
+            for name in os.listdir(category_path):
+                item_path = os.path.join(category_path, name)
+                if os.path.isdir(item_path):
+                    popanim_key = f"POPANIM_{category.upper()}_{name.upper()}"
+                    rel_path = os.path.relpath(item_path, base_path).replace("\\", "/")
+                    entries[popanim_key] = {
+                        "type": "PopAnim",
+                        "path": rel_path
+                    }
 
-        for name in os.listdir(category_path):
-            item_path = os.path.join(category_path, name)
-            if os.path.isdir(item_path):
-                popanim_key = f"POPANIM_{category.upper()}_{name.upper()}"
-                rel_path = os.path.relpath(item_path, base_path).replace("\\", "/")
-                entries[popanim_key] = {
-                    "type": "PopAnim",
-                    "path": rel_path
-                }
+    # Scan resource/images/full/
+    full_path = os.path.join(base_path, "resource", "images", "full")
+    if os.path.isdir(full_path):
+        for category in os.listdir(full_path):
+            category_path = os.path.join(full_path, category)
+            if not os.path.isdir(category_path):
+                continue
+
+            for name in os.listdir(category_path):
+                item_path = os.path.join(category_path, name)
+                if name.endswith(".pam.xfl") and os.path.isdir(item_path):
+                    base_name = name.replace(".pam.xfl", "")
+                    popanim_key = f"POPANIM_{category.upper()}_{base_name.upper()}"
+                    rel_path = os.path.relpath(category_path, base_path).replace("\\", "/") + f"/{base_name}"
+                    entries[popanim_key] = {
+                        "type": "PopAnim",
+                        "path": rel_path
+                    }
 
     return entries
 

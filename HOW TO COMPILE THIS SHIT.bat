@@ -1,12 +1,15 @@
 @echo off
-title Installing Dependencies for Hamulous Stache
-echo Installing required Python packages for Hamulous Stache...
-echo.
+echo Installing required Python libraries...
 
-pip install pillow
-pip install numpy
-pip install psd-tools
+python -m ensurepip --upgrade
+
+python -m pip install --upgrade pip
+python -m pip install pillow
+python -m pip install opencv-python
+python -m pip install numpy
+python -m pip install psd-tools
+python -m pip install lxml
 
 echo.
-echo All required libraries have been installed!
+echo All required libraries installed!
 pause

@@ -1,8 +1,44 @@
+
 import os
 import json
+import webbrowser
 from colorama import init, Fore, Style
 
-init(autoreset=True)  # Enable colored output
+init(autoreset=True)
+
+CONFIG_FILE = "hamulous_config.json"
+
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"show_error_prompt": True, "has_seen_prompt": False}
+
+def save_config(config):
+    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+        json.dump(config, f, indent=4)
+
+def prompt_report_bug():
+    print(Fore.YELLOW + "Would you like to report this issue?")
+    print("[1] Yes, open the issue report page")
+    print("[2] No")
+    choice = input("> ").strip()
+
+    if choice == "1":
+        webbrowser.open("https://github.com/Hamulous/Hamulous-Stache/issues/new")
+
+    # Ask whether to show this prompt again
+    print(Fore.YELLOW + "Do you want to see this error prompt again in the future?")
+    print("[1] No, don't show it again")
+    print("[2] Yes, keep showing it")
+    choice2 = input("> ").strip()
+    config = load_config()
+    if choice2 == "1":
+        config["show_error_prompt"] = False
+    else:
+        config["show_error_prompt"] = True
+    config["has_seen_prompt"] = True
+    save_config(config)
 
 def get_resource_path(relative_path):
     try:
@@ -26,7 +62,6 @@ def load_name_map(path):
     except Exception:
         return {}
 
-# Define categories using arrays
 CATEGORY_MAP = {
     "PvZ2 Tools": [
         "organize_zombiejsons.py",
@@ -43,15 +78,16 @@ CATEGORY_MAP = {
     "Image/PSD Tools": [
         "ExportSprites.py",
         "PSDExporterImade.py",
-        "Coolimageresizer.py"
+        "Coolimageresizer.py",
+        "enhance_images.py"
     ]
 }
 
 def categorize_scripts(script_files):
     categories = {
         "PvZ2 Tools": [],
-        "Image/PSD Tools": []
-  
+        "Image/PSD Tools": [],
+        "Misc": []
     }
     for file in script_files:
         found = False
@@ -83,7 +119,8 @@ def main():
 
     color_map = {
         "PvZ2 Tools": Fore.YELLOW,
-        "Image/PSD Tools": Fore.MAGENTA    
+        "Image/PSD Tools": Fore.MAGENTA,
+        "Misc": Fore.GREEN
     }
 
     while True:
@@ -112,7 +149,10 @@ def main():
             else:
                 print(Fore.RED + "Invalid option.")
         except Exception as e:
-            print(Fore.RED + f"Error: {e}")
+            print(Fore.RED + f"\n[!] Script crashed with error: {e}")
+            config = load_config()
+            if config.get("show_error_prompt", True) and not config.get("has_seen_prompt", False):
+                prompt_report_bug()
 
 if __name__ == "__main__":
     main()

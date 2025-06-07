@@ -22,7 +22,7 @@ def resize_rename_trim_pngs(folder_path, prefix, scale_percent=100):
                     img = img.crop(bbox) 
                     width, height = img.size
             
-            base_filename = f"{prefix}_{folder_name}_{width}x{height}".replace('__', '_')
+            base_filename = f"{prefix}_{width}x{height}".replace('__', '_')
             new_filename = f"{base_filename}.png"
             new_path = os.path.join(folder_path, new_filename)
             

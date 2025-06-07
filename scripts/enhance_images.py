@@ -3,6 +3,11 @@ import os
 import shutil
 import numpy as np
 from PIL import Image, ImageFilter
+import logging
+from concurrent.futures import ThreadPoolExecutor
+
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='[%(levelname)s] %(message)s')
 
 def is_bright_uniform(image, threshold=25, coverage=0.8):
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -40,8 +45,17 @@ def is_final_glow_stroke(image, width, height):
         is_low_edge_complexity(image)
     )
 
-def should_skip_image(image, width, height):
-    return is_final_glow_stroke(image, width, height)
+def should_skip_image(image, filename, width, height):
+    if height < 32 or width < 32:
+        logging.info(f"Skipped tiny sprite: {filename}")
+        return True
+    if any(tag in filename.lower() for tag in ["eff", "glow"]) or filename.lower().endswith("_2.png"):
+        logging.info(f"Skipped by tag: {filename}")
+        return True
+    if is_final_glow_stroke(image, width, height):
+        logging.info(f"Skipped soft glow stroke: {filename}")
+        return True
+    return False
 
 def enhance_with_upscale(image_cv, scale_factor=4, sigma_color=75, sigma_space=75):
     height, width = image_cv.shape[:2]
@@ -50,74 +64,93 @@ def enhance_with_upscale(image_cv, scale_factor=4, sigma_color=75, sigma_space=7
     downscaled = cv2.resize(enhanced, (width, height), interpolation=cv2.INTER_AREA)
     return downscaled
 
-def enhance_image(image_path, sigma_color=75, sigma_space=75, backup_folder=None, size_threshold=64):
+def enhance_image(image_path, sigma_color=75, sigma_space=75, backup_folder=None, size_threshold=64, dry_run=False):
     filename = os.path.basename(image_path)
-    img_cv = cv2.imread(image_path)
+    try:
+        img_cv = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+        if img_cv is None:
+            logging.warning(f"Unable to read image: {filename}")
+            return
+        if img_cv.shape[2] == 4:
+            img_cv = cv2.cvtColor(img_cv, cv2.COLOR_BGRA2BGR)
+    except Exception as e:
+        logging.error(f"Error reading image {filename}: {e}")
+        return
+
     height, width = img_cv.shape[:2]
 
-    if height < 32 or width < 32:
-        print(f"[–] Skipped tiny sprite: {filename}")
+    if should_skip_image(img_cv, filename, width, height):
         return
-    if any(tag in filename.lower() for tag in ["eff", "glow"]) or filename.lower().endswith("_2.png"):
-        print(f"[–] Skipped by tag: {filename}")
-        return
-    if should_skip_image(img_cv, width, height):
-        print(f"[–] Skipped soft glow stroke: {filename}")
+
+    if dry_run:
+        logging.info(f"[Dry Run] Would enhance: {filename}")
         return
 
     if backup_folder:
         os.makedirs(backup_folder, exist_ok=True)
         shutil.copy(image_path, os.path.join(backup_folder, filename))
 
-    if height >= size_threshold and width >= size_threshold:
-        final = enhance_with_upscale(img_cv, scale_factor=4, sigma_color=sigma_color, sigma_space=sigma_space)
-        cv2.imwrite(image_path, final)
-    else:
-        img_pil = Image.open(image_path)
-        enhanced = img_pil.filter(ImageFilter.UnsharpMask(radius=1, percent=100, threshold=5))
-        enhanced.save(image_path)
+    try:
+        if height >= size_threshold and width >= size_threshold:
+            final = enhance_with_upscale(img_cv, scale_factor=4, sigma_color=sigma_color, sigma_space=sigma_space)
+            cv2.imwrite(image_path, final)
+        else:
+            img_pil = Image.open(image_path)
+            enhanced = img_pil.filter(ImageFilter.UnsharpMask(radius=1, percent=100, threshold=5))
+            enhanced.save(image_path)
+    except Exception as e:
+        logging.error(f"Error enhancing image {filename}: {e}")
+        return
 
-    print(f"[✓] Enhanced: {filename}")
+    logging.info(f"Enhanced: {filename}")
 
-def batch_enhance_images(folder_path, sigma_color=75, sigma_space=75):
+def batch_enhance_images(folder_path, sigma_color=75, sigma_space=75, dry_run=False):
     supported_exts = ('.png', '.jpg', '.jpeg')
     backup_path = os.path.join(folder_path, "backup")
+    os.makedirs(backup_path, exist_ok=True)
 
-    for filename in os.listdir(folder_path):
-        if filename.lower().endswith(supported_exts):
-            full_path = os.path.join(folder_path, filename)
-            enhance_image(full_path, sigma_color, sigma_space, backup_folder=backup_path)
+    images = [
+        os.path.join(folder_path, f) for f in os.listdir(folder_path)
+        if f.lower().endswith(supported_exts)
+    ]
+    with ThreadPoolExecutor() as executor:
+        for path in images:
+            executor.submit(enhance_image, path, sigma_color, sigma_space, backup_path, dry_run=dry_run)
 
 def main():
     print("Choose Mode:")
     print("[1] Enhance single image")
     print("[2] Enhance all images in a folder")
-    choice = input("Enter 1 or 2: ").strip()
+    print("[3] Dry Run (simulate folder enhancement)")
+    choice = input("Enter 1, 2 or 3: ").strip()
 
     try:
         sigma_color = float(input("Enter color strength (sigmaColor, e.g., 75): ").strip())
         sigma_space = float(input("Enter edge strength (sigmaSpace, e.g., 75): ").strip())
     except ValueError:
-        print("Invalid input for sigma values. Exiting.")
+        logging.error("Invalid input for sigma values. Exiting.")
         return
+
+    dry_run = choice == "3"
 
     if choice == "1":
         image_path = input("Enter full path to image: ").strip('"')
         if os.path.isfile(image_path):
             folder = os.path.dirname(image_path)
             backup = os.path.join(folder, "backup")
-            enhance_image(image_path, sigma_color, sigma_space, backup_folder=backup)
+            enhance_image(image_path, sigma_color, sigma_space, backup_folder=backup, dry_run=dry_run)
         else:
-            print("Invalid image path.")
-    elif choice == "2":
+            logging.error("Invalid image path.")
+    elif choice in ["2", "3"]:
         folder_path = input("Enter full path to folder: ").strip('"')
         if os.path.isdir(folder_path):
-            batch_enhance_images(folder_path, sigma_color, sigma_space)
-            print("[✓] All images enhanced. Originals backed up in /backup.")
+            batch_enhance_images(folder_path, sigma_color, sigma_space, dry_run=dry_run)
+            if not dry_run:
+                logging.info("All images enhanced. Originals backed up in /backup.")
         else:
-            print("Invalid folder path.")
+            logging.error("Invalid folder path.")
     else:
-        print("Invalid choice.")
+        logging.error("Invalid choice.")
 
 if __name__ == "__main__":
     main()
