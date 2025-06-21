@@ -1,5 +1,4 @@
 import os
-import sys
 from xml.etree import ElementTree as ET
 
 def find_label_xmls(folder):
@@ -48,14 +47,25 @@ def main():
         return
 
     print("\nAvailable label XMLs:")
-    for i, fname in enumerate(xml_files):
+    for i, fname in enumerate(xml_files, start=1):
         print(f"[{i}] {fname}")
 
-    try:
-        index = int(input("\nEnter the number of the file to edit: "))
-        chosen_file = xml_files[index]
-    except (ValueError, IndexError):
-        print("Invalid selection.")
+    selected_files = []
+    while True:
+        choice = input("Enter label number to edit (or 0 to finish): ").strip()
+        if choice == "0":
+            break
+        if choice.isdigit():
+            index = int(choice) - 1
+            if 0 <= index < len(xml_files):
+                selected_files.append(xml_files[index])
+            else:
+                print("Invalid index.")
+        else:
+            print("Please enter a valid number.")
+
+    if not selected_files:
+        print("No valid files selected.")
         return
 
     speed_input = input("Speed multiplier (default is 2): ").strip()
@@ -67,8 +77,9 @@ def main():
         print("Invalid speed multiplier.")
         return
 
-    full_path = os.path.join(label_folder, chosen_file)
-    speed_up_and_remove_frames(full_path, speed)
+    for fname in selected_files:
+        full_path = os.path.join(label_folder, fname)
+        speed_up_and_remove_frames(full_path, speed)
 
 if __name__ == "__main__":
     main()

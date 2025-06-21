@@ -12,5 +12,6 @@
     "data_to_atlas.py": "Data to Atlas",
     "rewrite_scg_json.py": "Rewrite SCG Data.json",
     "speedup_labels.py": "Speed up Animation",
-    "enhance_images.py": "Upscale Images"
+    "enhance_images.py": "Upscale Images",
+    "resize_label_matrices.py": "Resize Animation" 
 }

@@ -148,6 +148,36 @@ The script will create:
 - a clean, organized zombieprops_results.json
 ```
 
+# Resize Label Animations
+
+Author: Hamulous
+Purpose: Uniformly scales transformation matrices in label XML files from a PvZ2 .xfl animation project.
+
+The script will:
+
+```
+- Search for label XMLs inside the library/label/ folder of a given .xfl project
+- Let you select one or more XML files to resize
+- Prompt you for a scale multiplier (e.g., 0.5 or 2)
+- Scale all matrix attributes (a, b, c, d, tx, ty) accordingly
+```
+
+You will need a full path to a valid .xfl project folder.
+Example:
+
+```go
+Your_project.xfl/
+└── library/
+    └── label/
+        ├── anim_run.xml
+        ├── anim_jump.xml
+        └── ...
+```
+
+The script will modify:
+
+- The selected XML files in-place with resized transformation matrices.
+
 # Rewrite SCG JSON
 
 - Author: [Hamulous](https://github.com/Hamulous)
