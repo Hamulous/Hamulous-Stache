@@ -74,7 +74,8 @@ CATEGORY_MAP = {
         "data_to_atlas.py",
         "rewrite_scg_json.py",
         "speedup_labels.py", 
-        "resize_label_matrices.py"
+        "resize_label_matrices.py",
+        "fix_tmp_references.py"
     ],
     "Image/PSD Tools": [
         "ExportSprites.py",

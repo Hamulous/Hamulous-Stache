@@ -107,6 +107,38 @@ The script will create:
 - a new .patch.json file for use in your pvz2 mod.
 ```
 
+# TMP Reference Fixer
+
+- Author: [Hamulous](https://github.com/Hamulous)
+- Purpose: Cleans up .xfl projects by renaming TMP bitmap references, fixing XMLs, updating DOMDocument.xml, and refreshing data.json.
+
+The script will:
+```
+- Scan library/image/*.xml files for TMP image references
+- Rename TMP PNGs to match their image XML filenames
+- Copy renamed images into library/media/
+- Insert missing DOMBitmapItem entries into DOMDocument.xml
+- Regenerate data.json in your xfl project if available 
+- Create backups of modified files in an xfl_tmpfix_backups/ folder
+```
+
+You will need to drag and drop a valid .xfl folder that includes:
+
+```
+- library/image/
+- library/media/
+- DOMDocument.xml
+- (optional) packet/ folder for SCG file scanning
+```
+
+The script will then:
+
+```
+- Patch all image XMLs
+- Copy and rename image assets
+- Fix DOMDocument.xml and data.json automatically
+```
+
 # Zombie Actions Organizer
 
 - Author: [Hamulous](https://github.com/Hamulous)

@@ -13,5 +13,6 @@
     "rewrite_scg_json.py": "Rewrite SCG Data.json",
     "speedup_labels.py": "Speed up Animation",
     "enhance_images.py": "Upscale Images",
-    "resize_label_matrices.py": "Resize Animation" 
+    "resize_label_matrices.py": "Resize Animation",
+    "fix_tmp_references.py": "Patch TMP References"
 }
