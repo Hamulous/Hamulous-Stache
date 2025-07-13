@@ -1,4 +1,8 @@
-# Hamulous-Stache
+# [IMPORTANT NOTICE PLEASE READ!!]
+This project will soon be archieved as read only due to collabing with [Stuff26](https://github.com/stuff26) on his [helper-functions](https://github.com/stuff26/PvZ2-Helper-Functions), please check that out!!
+
+
+### Hamulous-Stache
 A stache of functions that are meant for modding Plants vs Zombies 2 with other things thrown in. These functions are made by Hamulous and other contributors and are mainly made for usage with Sen 4.0. All of this is coded in python. Below will explain each current function.
 
 ## Includes:
