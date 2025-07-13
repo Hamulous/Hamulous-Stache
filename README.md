@@ -1,5 +1,5 @@
 # [IMPORTANT NOTICE PLEASE READ!!]
-This project will soon be archieved as read only due to collabing with [Stuff26](https://github.com/stuff26) on his [helper-functions](https://github.com/stuff26/PvZ2-Helper-Functions), please check that out!!
+This project will soon be archived as read only due to collabing with [Stuff26](https://github.com/stuff26) on his [helper-functions](https://github.com/stuff26/PvZ2-Helper-Functions), please check that out!!
 
 
 ### Hamulous-Stache
