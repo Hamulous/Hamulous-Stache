@@ -82,6 +82,10 @@ CATEGORY_MAP = {
         "PSDExporterImade.py",
         "Coolimageresizer.py",
         "enhance_images.py"
+    ],
+    "Snowie Lib Tools": [
+        "add_snowie_id.py"
+        "snwlibtransfer.py"
     ]
 }
 
@@ -89,6 +93,7 @@ def categorize_scripts(script_files):
     categories = {
         "PvZ2 Tools": [],
         "Image/PSD Tools": [],
+        "Snowie Lib Tools": [],
         "Misc": []
     }
     for file in script_files:
@@ -122,6 +127,7 @@ def main():
     color_map = {
         "PvZ2 Tools": Fore.YELLOW,
         "Image/PSD Tools": Fore.MAGENTA,
+        "Snowie Lib Tools": Fore.CYAN,
         "Misc": Fore.GREEN
     }
 
